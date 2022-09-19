@@ -60,7 +60,7 @@ const LoginView: React.FC = () => {
       className="w-80 flex flex-col justify-between p-3"
     >
       <div className="flex justify-center pb-12 ">
-        <Logo width="64px" height="64px" />
+        Sign in
       </div>
       <div className="flex flex-col space-y-3">
         {message && (
@@ -74,7 +74,7 @@ const LoginView: React.FC = () => {
             </a>
           </div>
         )}
-        <Input type="email" placeholder="Email" onChange={setEmail} />
+        <Input type="email" placeholder="Company Email or Phone" onChange={setEmail} />
         <Input type="password" placeholder="Password" onChange={setPassword} />
 
         <Button
@@ -85,14 +85,11 @@ const LoginView: React.FC = () => {
         >
           Log In
         </Button>
-        <div className="pt-1 text-center text-sm">
-          <span className="text-accent-7">Don't have an account?</span>
+        <div className="pt-1 text-sm">
+          <span className="text-accent-7">New to Arbre?</span>
           {` `}
-          <a
-            className="text-accent-9 font-bold hover:underline cursor-pointer"
-            onClick={() => setModalView('SIGNUP_VIEW')}
-          >
-            Sign Up
+          <a href={'/sign-up'} className="text-accent-9 font-bold hover:underline cursor-pointer">
+            Join now
           </a>
         </div>
       </div>

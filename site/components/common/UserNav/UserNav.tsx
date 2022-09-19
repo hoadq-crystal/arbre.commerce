@@ -1,7 +1,5 @@
 import cn from 'clsx'
-import Link from 'next/link'
 import s from './UserNav.module.css'
-import { Avatar } from '@components/common'
 import useCart from '@framework/cart/use-cart'
 import { useUI } from '@components/ui/context'
 import { Heart, Bag, Menu } from '@components/icons'
@@ -28,6 +26,7 @@ const UserNav: React.FC<{
     closeSidebarIfPresent,
     openModal,
     setSidebarView,
+    setModalView,
     openSidebar,
   } = useUI()
 
@@ -39,49 +38,26 @@ const UserNav: React.FC<{
   return (
     <nav className={cn(s.root, className)}>
       <ul className={s.list}>
-        {process.env.COMMERCE_CART_ENABLED && (
-          <li className={s.item}>
-            <Button
-              className={s.item}
-              variant="naked"
-              onClick={() => {
-                setSidebarView('CART_VIEW')
-                openSidebar()
-              }}
-              aria-label={`Cart items: ${itemsCount}`}
-            >
-              <Bag />
-              {itemsCount > 0 && (
-                <span className={s.bagCount}>{itemsCount}</span>
-              )}
-            </Button>
-          </li>
-        )}
-        {process.env.COMMERCE_WISHLIST_ENABLED && (
-          <li className={s.item}>
-            <Link href="/wishlist">
-              <a onClick={closeSidebarIfPresent} aria-label="Wishlist">
-                <Heart />
-              </a>
-            </Link>
-          </li>
-        )}
-        {process.env.COMMERCE_CUSTOMERAUTH_ENABLED && (
-          <li className={s.item}>
-            <Dropdown>
-              <DropdownTrigger>
-                <button
-                  aria-label="Menu"
-                  className={s.avatarButton}
-                  onClick={() => (isCustomerLoggedIn ? null : openModal())}
-                >
-                  <Avatar />
-                </button>
-              </DropdownTrigger>
-              <CustomerMenuContent />
-            </Dropdown>
-          </li>
-        )}
+        <li className={s.item}>
+          <Dropdown>
+            <DropdownTrigger>
+              <button aria-label="Menu">
+                SIGN UP, IT'S FREE
+              </button>
+            </DropdownTrigger>
+            <CustomerMenuContent />
+          </Dropdown>
+        </li>
+        <li className={s.item}>
+          <Dropdown>
+            <DropdownTrigger>
+              <button aria-label="Menu" onClick={() => (isCustomerLoggedIn ? null : openModal())}>
+               SIGN IN
+              </button>
+            </DropdownTrigger>
+            <CustomerMenuContent />
+          </Dropdown>
+        </li>
         <li className={s.mobileMenu}>
           <Button
             className={s.item}
@@ -90,8 +66,7 @@ const UserNav: React.FC<{
             onClick={() => {
               setSidebarView('MOBILE_MENU_VIEW')
               openSidebar()
-            }}
-          >
+            }}>
             <Menu />
           </Button>
         </li>
