@@ -33,6 +33,9 @@ export default function getAllProductsOperation({
         groupByProduct: true,
       },
     }
+    console.log('Query ===>>>: ' + query)
+    console.log('----------------------------------------')
+    console.log('Config ===>>>: ' + JSON.stringify(config))
     const { data } = await config.fetch<GetAllProductsQuery>(query, {
       variables,
     })

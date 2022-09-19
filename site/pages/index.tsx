@@ -23,7 +23,7 @@ export async function getStaticProps({
   const { products } = await productsPromise
   const { pages } = await pagesPromise
   const { categories, brands } = await siteInfoPromise
-
+  console.log('products ===>>>: ' + JSON.stringify(products))
   return {
     props: {
       products,
@@ -87,5 +87,4 @@ export default function Home({
     </>
   )
 }
-
 Home.Layout = Layout
