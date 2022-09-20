@@ -13,7 +13,6 @@
 
 .wrapper {
   @apply block relative;
-
   &:not(.show)::before {
     content: none;
   }

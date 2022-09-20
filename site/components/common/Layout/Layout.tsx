@@ -9,7 +9,7 @@ import { Navbar, Footer } from '@components/common'
 import ShippingView from '@components/checkout/ShippingView'
 import CartSidebarView from '@components/cart/CartSidebarView'
 import { useAcceptCookies } from '@lib/hooks/useAcceptCookies'
-import { Sidebar, Button, LoadingDots } from '@components/ui'
+import {Sidebar, Button, LoadingDots, Dropdown, DropdownTrigger as DropdownTriggerInst} from '@components/ui'
 import PaymentMethodView from '@components/checkout/PaymentMethodView'
 import CheckoutSidebarView from '@components/checkout/CheckoutSidebarView'
 import { CheckoutProvider } from '@components/checkout/context'
@@ -17,6 +17,9 @@ import { MenuSidebarView } from '@components/common/UserNav'
 import type { Page } from '@commerce/types/page'
 import type { Category } from '@commerce/types/site'
 import type { Link as LinkProps } from '../UserNav/MenuSidebarView'
+import useCustomer from "@framework/customer/use-customer";
+import CustomerMenuContent from "../UserNav/CustomerMenuContent";
+import React from "react";
 
 const Loading = () => (
   <div className="w-80 h-80 flex items-center text-center justify-center p-3">
@@ -108,27 +111,73 @@ const Layout: React.FC<Props> = ({
 }) => {
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   const { locale = 'en-US' } = useRouter()
-  const navBarlinks = categories.slice(0, 2).map((c) => ({
-    label: c.name,
-    href: `/search/${c.slug}`,
-  }))
-
+  // const { data: isCustomerLoggedIn } = useCustomer()
+  const {
+    openModal,
+  } = useUI()
+  // const DropdownTrigger = isCustomerLoggedIn
+  //   ? DropdownTriggerInst
+  //   : React.Fragment
   return (
     <CommerceProvider locale={locale}>
-      <div className={cn(s.root)}>
-        <Navbar links={navBarlinks} />
-        <main className="fit">{children}</main>
-        <Footer pages={pageProps.pages} />
-        <ModalUI />
-        <FeatureBar
-          title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
-          hide={acceptedCookies}
-          action={
-            <Button className="mx-5" onClick={() => onAcceptCookies()}>
-              Accept cookies
-            </Button>
-          }
-        />
+      <div className="home-container">
+        <div className="home-home">
+          <div className="home-nav">
+            <div className="home-logo">
+              <img
+                src="/assets/iconsi628-paa.svg"
+                alt="iconsI628"
+                className="home-icons"
+              />
+              <span className="home-text">
+                <span>ARBRE</span>
+              </span>
+            </div>
+            <div className="home-menubutton">
+              <div className="home-menu">
+                <div className="home-itemlink">
+                  <span className="home-text02">
+                    <span>Home</span>
+                  </span>
+                </div>
+                <div className="home-itemlink1">
+                  <span className="home-text04">
+                    <span>Marketplace</span>
+                  </span>
+                </div>
+              </div>
+              <div className="home-buttons">
+                <button className="home-button">
+                  <span className="home-text06">
+                    <span>SIGN UP, IT’S FREE</span>
+                  </span>
+                </button>
+                <button className="home-button1">
+                  <span className="home-text08">
+                    <Dropdown>
+                      {/*<DropdownTrigger>*/}
+                        <span onClick={() => (openModal())}>SIGN IN</span>
+                      {/*</DropdownTrigger>*/}
+                    </Dropdown>
+                    {/*<span>SIGN IN</span>*/}
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+          {children}
+          <Footer pages={pageProps.pages} />
+          <ModalUI />
+          <FeatureBar
+            title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
+            hide={acceptedCookies}
+            action={
+              <Button className="mx-5" onClick={() => onAcceptCookies()}>
+                Accept cookies
+              </Button>
+            }
+          />
+        </div>
       </div>
     </CommerceProvider>
   )
